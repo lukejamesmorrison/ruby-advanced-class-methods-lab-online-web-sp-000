@@ -8,6 +8,7 @@ class Song
 
   def save
     self.class.all << self
+    self
   end
   
   def self.create
@@ -57,18 +58,8 @@ class Song
   end
   
   def self.create_from_filename(filename)
-    
-    #ARTIST - TITLE.EXTENSION
-    file_parts = filename.match(/(^.+)(?:\s[-]\s)(.+)(?:[.])(.+)/)
-    
-    artist = file_parts[1]
-    name = file_parts[2]
-    extension = file_parts[3]
-    
-    song = self.create_by_name(name)
-    song.artist_name = artist
-    
-    song
+    song = self.new_from_filename(filename)
+    song.save
   end
   
   def self.destroy_all
